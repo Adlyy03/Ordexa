@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "@/lib/providers";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -34,7 +35,10 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <body className={`${inter.className} antialiased bg-zinc-50 text-zinc-900 min-h-screen`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <ServiceWorkerRegister />
+          {children}
+        </Providers>
       </body>
     </html>
   );

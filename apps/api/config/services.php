@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    'xendit' => [
+        'api_key' => env('XENDIT_SECRET_KEY', 'xnd_development_secret'),
+        'webhook_token' => env('XENDIT_WEBHOOK_TOKEN', 'xnd_webhook_secret_key'),
+        'base_url' => env('XENDIT_BASE_URL', 'https://api.xendit.co'),
+    ],
+
+    'midtrans' => [
+        'server_key' => env('MIDTRANS_SERVER_KEY', 'midtrans_dev_server_key'),
+        'client_key' => env('MIDTRANS_CLIENT_KEY', 'midtrans_dev_client_key'),
+        'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
+    ],
+
 ];

@@ -12,6 +12,10 @@ Route::get('/health', fn () => response()->json([
 // Auth routes (public & sanctum)
 require __DIR__.'/../app/Modules/Auth/routes.php';
 
+// Customer Public QR Ordering (zero login)
+Route::get('/public/r/{restaurant_slug}/{branch_slug}/{table_token}', [App\Modules\Order\Controllers\PublicOrderController::class, 'getMenu']);
+Route::post('/public/r/{restaurant_slug}/{branch_slug}/{table_code}/order', [App\Modules\Order\Controllers\OrderController::class, 'storePublic']);
+
 // Protected API routes
 Route::middleware(['auth:sanctum'])->group(function () {
     if (file_exists(__DIR__.'/../app/Modules/Tenant/routes.php')) {

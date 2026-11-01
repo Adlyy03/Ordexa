@@ -3,6 +3,7 @@
 namespace App\Modules\Subscription\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Payment\Services\SubscriptionPaymentService;
 use App\Modules\Subscription\Models\Package;
 use App\Modules\Subscription\Models\Subscription;
 use App\Modules\Subscription\Services\FeatureEntitlementService;
@@ -12,7 +13,8 @@ use Illuminate\Http\Request;
 class SubscriptionController extends Controller
 {
     public function __construct(
-        protected FeatureEntitlementService $entitlementService
+        protected FeatureEntitlementService $entitlementService,
+        protected SubscriptionPaymentService $paymentService
     ) {}
 
     public function packages(): JsonResponse
@@ -55,6 +57,7 @@ class SubscriptionController extends Controller
         $validated = $request->validate([
             'package_id' => ['required', 'exists:packages,id'],
             'billing_period' => ['required', 'in:monthly,yearly'],
+            'gateway' => ['sometimes', 'in:xendit,midtrans'],
         ]);
 
         $restaurant = $request->user()->currentMembership()?->restaurant;
@@ -77,9 +80,15 @@ class SubscriptionController extends Controller
 
         $restaurant->update(['subscription_status' => 'pending_payment']);
 
+        $gateway = $validated['gateway'] ?? 'xendit';
+        $invoiceData = $this->paymentService->createSubscriptionInvoice($subscription, $gateway);
+
         return response()->json([
             'message' => 'Langganan berhasil dibuat, silakan lakukan pembayaran.',
-            'data' => $subscription->load('package'),
+            'data' => [
+                'subscription' => $subscription->load('package'),
+                'payment' => $invoiceData,
+            ],
         ], 201);
     }
 }
