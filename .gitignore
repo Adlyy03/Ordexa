@@ -1,0 +1,39 @@
+node_modules/
+.next/
+out/
+vendor/
+.env
+.env.local
+.env.production
+.env.staging
+storage/logs/
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+bootstrap/cache/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Graphify outputs (regeneratable)
+graphify-out/graph.json
+graphify-out/graph.html
+graphify-out/cost.json
+graphify-out/.graphify_*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+
+# Build artifacts
+dist/
+build/

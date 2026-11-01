@@ -1,0 +1,932 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "he_multitenancy_isolation",
+        "label": "Multi-Tenant Data Isolation Guardrail",
+        "nodes": [
+          "prd_multi_tenant_architecture",
+          "tech_postgresql_shared_schema",
+          "tech_sanctum_auth",
+          "prd_user_roles"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "TECH.md"
+      },
+      {
+        "id": "he_payment_routing",
+        "label": "Dual-Track Multi-Tenant Payment Engine",
+        "nodes": [
+          "prd_dual_payment_system",
+          "tech_payment_abstraction_layer",
+          "tech_xendit_xenplatform",
+          "tech_midtrans_gateway",
+          "prd_subscription_billing"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "TECH.md"
+      },
+      {
+        "id": "he_realtime_order_lifecycle",
+        "label": "Order-to-Kitchen Realtime Flow",
+        "nodes": [
+          "prd_qr_table_ordering",
+          "prd_kds_kitchen_display",
+          "prd_pos_cashier",
+          "tech_reverb_realtime"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 1.0,
+        "source_file": "PRD.md"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "prd_pwa_approach",
+      "label": "Hybrid Web & PWA Architecture",
+      "community": 0,
+      "community_name": "Frontend & PWA Dashboards",
+      "file_type": "concept",
+      "norm_label": "hybrid web & pwa architecture",
+      "rationale": "Dashboards/POS/KDS installable as PWA; ordering & public web remain standard web",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a710"
+    },
+    {
+      "id": "prd_public_website",
+      "label": "Public Marketing & Registration Portal",
+      "community": 0,
+      "community_name": "Frontend & PWA Dashboards",
+      "file_type": "document",
+      "norm_label": "public marketing & registration portal",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.1, \u00a77.2"
+    },
+    {
+      "id": "prd_restaurant_dashboard",
+      "label": "Restaurant Management Dashboard",
+      "community": 0,
+      "community_name": "Frontend & PWA Dashboards",
+      "file_type": "document",
+      "norm_label": "restaurant management dashboard",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.4"
+    },
+    {
+      "id": "prd_super_admin_dashboard",
+      "label": "Super Admin Platform Dashboard",
+      "community": 0,
+      "community_name": "Frontend & PWA Dashboards",
+      "file_type": "document",
+      "norm_label": "super admin platform dashboard",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.3"
+    },
+    {
+      "id": "tech_domain_routing",
+      "label": "Multi-Subdomain Routing Architecture",
+      "community": 0,
+      "community_name": "Frontend & PWA Dashboards",
+      "file_type": "document",
+      "norm_label": "multi-subdomain routing architecture",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a78"
+    },
+    {
+      "id": "tech_nextjs_frontend",
+      "label": "Next.js 16 Frontend App",
+      "community": 0,
+      "community_name": "Frontend & PWA Dashboards",
+      "file_type": "document",
+      "norm_label": "next.js 16 frontend app",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.1"
+    },
+    {
+      "id": "tech_pwa_dashboard",
+      "label": "PWA Manifest & Service Worker",
+      "community": 0,
+      "community_name": "Frontend & PWA Dashboards",
+      "file_type": "document",
+      "norm_label": "pwa manifest & service worker",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.5"
+    },
+    {
+      "id": "tech_shadcn_tailwind_ui",
+      "label": "Tailwind CSS & shadcn/ui Design System",
+      "community": 0,
+      "community_name": "Frontend & PWA Dashboards",
+      "file_type": "document",
+      "norm_label": "tailwind css & shadcn/ui design system",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.1"
+    },
+    {
+      "id": "tech_tanstack_zustand_state",
+      "label": "TanStack Query & Zustand State Layer",
+      "community": 0,
+      "community_name": "Frontend & PWA Dashboards",
+      "file_type": "document",
+      "norm_label": "tanstack query & zustand state layer",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.1"
+    },
+    {
+      "id": "prd_user_roles",
+      "label": "RBAC Roles & Permissions",
+      "community": 1,
+      "community_name": "Backend Architecture & Infra",
+      "file_type": "concept",
+      "norm_label": "rbac roles & permissions",
+      "rationale": "Super Admin, Owner, Admin, Branch Manager, Cashier, Kitchen, Customer",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a76"
+    },
+    {
+      "id": "tech_architecture_modular_monolith",
+      "label": "Modular Monolith Technical Architecture",
+      "community": 1,
+      "community_name": "Backend Architecture & Infra",
+      "file_type": "concept",
+      "norm_label": "modular monolith technical architecture",
+      "rationale": "Fast development, simple deployment, lower infra cost for MVP without microservice overhead",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a71"
+    },
+    {
+      "id": "tech_docker_compose_vps",
+      "label": "Docker Compose VPS Deployment",
+      "community": 1,
+      "community_name": "Backend Architecture & Infra",
+      "file_type": "document",
+      "norm_label": "docker compose vps deployment",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.7, \u00a711"
+    },
+    {
+      "id": "tech_laravel_backend",
+      "label": "Laravel 13 (PHP 8.4) Modular API",
+      "community": 1,
+      "community_name": "Backend Architecture & Infra",
+      "file_type": "document",
+      "norm_label": "laravel 13 (php 8.4) modular api",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.2"
+    },
+    {
+      "id": "tech_monorepo_structure",
+      "label": "Monorepo Structure (apps/web, apps/api, packages)",
+      "community": 1,
+      "community_name": "Backend Architecture & Infra",
+      "file_type": "document",
+      "norm_label": "monorepo structure (apps/web, apps/api, packages)",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a74"
+    },
+    {
+      "id": "tech_postgresql_shared_schema",
+      "label": "PostgreSQL Shared Schema with Tenant Isolation",
+      "community": 1,
+      "community_name": "Backend Architecture & Infra",
+      "file_type": "document",
+      "norm_label": "postgresql shared schema with tenant isolation",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.3"
+    },
+    {
+      "id": "tech_queue_workers",
+      "label": "Laravel Queue & Scheduler Workers",
+      "community": 1,
+      "community_name": "Backend Architecture & Infra",
+      "file_type": "document",
+      "norm_label": "laravel queue & scheduler workers",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.2"
+    },
+    {
+      "id": "tech_redis_cache_queue",
+      "label": "Redis Cache, Session & Queue Store",
+      "community": 1,
+      "community_name": "Backend Architecture & Infra",
+      "file_type": "document",
+      "norm_label": "redis cache, session & queue store",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.3"
+    },
+    {
+      "id": "tech_sanctum_auth",
+      "label": "Laravel Sanctum & RBAC Policies",
+      "community": 1,
+      "community_name": "Backend Architecture & Infra",
+      "file_type": "document",
+      "norm_label": "laravel sanctum & rbac policies",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.2, \u00a76"
+    },
+    {
+      "id": "prd_branch_management",
+      "label": "Branch Operations Management",
+      "community": 2,
+      "community_name": "Multi-Tenancy, Branches & Menu",
+      "file_type": "concept",
+      "norm_label": "branch operations management",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.4.C"
+    },
+    {
+      "id": "prd_menu_management",
+      "label": "Menu & Category Management",
+      "community": 2,
+      "community_name": "Multi-Tenancy, Branches & Menu",
+      "file_type": "concept",
+      "norm_label": "menu & category management",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.4.D"
+    },
+    {
+      "id": "prd_multi_tenant_architecture",
+      "label": "Multi-Tenant SaaS Architecture",
+      "community": 2,
+      "community_name": "Multi-Tenancy, Branches & Menu",
+      "file_type": "concept",
+      "norm_label": "multi-tenant saas architecture",
+      "rationale": "Shared database and shared schema with tenant_id isolation for low overhead MVP",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a79"
+    },
+    {
+      "id": "prd_unlimited_branches",
+      "label": "Unlimited Multi-Branch Concept",
+      "community": 2,
+      "community_name": "Multi-Tenancy, Branches & Menu",
+      "file_type": "concept",
+      "norm_label": "unlimited multi-branch concept",
+      "rationale": "Branches are unlimited across all tiers; tiers differ by features, not branch limits",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a75, \u00a78"
+    },
+    {
+      "id": "tech_cloudflare_r2_storage",
+      "label": "Cloudflare R2 Object Storage & CDN",
+      "community": 2,
+      "community_name": "Multi-Tenancy, Branches & Menu",
+      "file_type": "document",
+      "norm_label": "cloudflare r2 object storage & cdn",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.6"
+    },
+    {
+      "id": "prd_dual_payment_system",
+      "label": "Dual Payment Architecture (Subscription vs Customer)",
+      "community": 3,
+      "community_name": "Payment Gateway & QR Ordering",
+      "file_type": "concept",
+      "norm_label": "dual payment architecture (subscription vs customer)",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a711"
+    },
+    {
+      "id": "prd_qr_table_ordering",
+      "label": "Customer QR Table Ordering",
+      "community": 3,
+      "community_name": "Payment Gateway & QR Ordering",
+      "file_type": "document",
+      "norm_label": "customer qr table ordering",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.5"
+    },
+    {
+      "id": "tech_midtrans_gateway",
+      "label": "Midtrans Payment Gateway (Platform Subscription)",
+      "community": 3,
+      "community_name": "Payment Gateway & QR Ordering",
+      "file_type": "document",
+      "norm_label": "midtrans payment gateway (platform subscription)",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.4, \u00a75.1"
+    },
+    {
+      "id": "tech_payment_abstraction_layer",
+      "label": "Payment Provider Abstraction Layer",
+      "community": 3,
+      "community_name": "Payment Gateway & QR Ordering",
+      "file_type": "document",
+      "norm_label": "payment provider abstraction layer",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a75.3"
+    },
+    {
+      "id": "tech_xendit_xenplatform",
+      "label": "Xendit xenPlatform Sub-Merchant Engine",
+      "community": 3,
+      "community_name": "Payment Gateway & QR Ordering",
+      "file_type": "document",
+      "norm_label": "xendit xenplatform sub-merchant engine",
+      "rationale": "Master account for platform with sub-accounts for each restaurant to route QRIS customer payments directly",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.4, \u00a75.1"
+    },
+    {
+      "id": "prd_enterprise_package",
+      "label": "Enterprise Subscription Tier",
+      "community": 4,
+      "community_name": "Subscription & Package Lifecycle",
+      "file_type": "concept",
+      "norm_label": "enterprise subscription tier",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a78"
+    },
+    {
+      "id": "prd_professional_package",
+      "label": "Professional Subscription Tier",
+      "community": 4,
+      "community_name": "Subscription & Package Lifecycle",
+      "file_type": "concept",
+      "norm_label": "professional subscription tier",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a78"
+    },
+    {
+      "id": "prd_starter_package",
+      "label": "Starter Subscription Tier",
+      "community": 4,
+      "community_name": "Subscription & Package Lifecycle",
+      "file_type": "concept",
+      "norm_label": "starter subscription tier",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a78"
+    },
+    {
+      "id": "prd_subscription_billing",
+      "label": "SaaS Subscription & Billing Engine",
+      "community": 4,
+      "community_name": "Subscription & Package Lifecycle",
+      "file_type": "concept",
+      "norm_label": "saas subscription & billing engine",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.9, \u00a712"
+    },
+    {
+      "id": "prd_subscription_lifecycle",
+      "label": "Subscription Lifecycle States",
+      "community": 4,
+      "community_name": "Subscription & Package Lifecycle",
+      "file_type": "concept",
+      "norm_label": "subscription lifecycle states",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a712"
+    },
+    {
+      "id": "prd_kds_kitchen_display",
+      "label": "Kitchen Display System (KDS)",
+      "community": 5,
+      "community_name": "Realtime KDS & POS Operations",
+      "file_type": "document",
+      "norm_label": "kitchen display system (kds)",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.6"
+    },
+    {
+      "id": "prd_pos_cashier",
+      "label": "POS / Cashier System",
+      "community": 5,
+      "community_name": "Realtime KDS & POS Operations",
+      "file_type": "document",
+      "norm_label": "pos / cashier system",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.7"
+    },
+    {
+      "id": "tech_reverb_realtime",
+      "label": "Laravel Reverb WebSockets",
+      "community": 5,
+      "community_name": "Realtime KDS & POS Operations",
+      "file_type": "document",
+      "norm_label": "laravel reverb websockets",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a72.2"
+    },
+    {
+      "id": "prd_acceptance_criteria",
+      "label": "MVP Acceptance Criteria",
+      "community": 6,
+      "community_name": "QA, Acceptance & Testing",
+      "file_type": "concept",
+      "norm_label": "mvp acceptance criteria",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a715"
+    },
+    {
+      "id": "tech_testing_pest_vitest_playwright",
+      "label": "Testing Suite (Pest, Vitest, Playwright)",
+      "community": 6,
+      "community_name": "QA, Acceptance & Testing",
+      "file_type": "document",
+      "norm_label": "testing suite (pest, vitest, playwright)",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a77"
+    },
+    {
+      "id": "prd_mvp_priorities",
+      "label": "MVP Priorities (P0/P1/P2)",
+      "community": 7,
+      "community_name": "Roadmap & Implementation Phases",
+      "file_type": "concept",
+      "norm_label": "mvp priorities (p0/p1/p2)",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a714"
+    },
+    {
+      "id": "tech_implementation_phases",
+      "label": "8-Phase Technical Implementation Plan",
+      "community": 7,
+      "community_name": "Roadmap & Implementation Phases",
+      "file_type": "concept",
+      "norm_label": "8-phase technical implementation plan",
+      "source_file": "TECH.md",
+      "source_location": "TECH.md \u00a712"
+    },
+    {
+      "id": "prd_executive_summary",
+      "label": "Ordexa Restaurant SaaS Overview",
+      "community": 8,
+      "community_name": "Ordexa Platform Vision",
+      "file_type": "concept",
+      "norm_label": "ordexa restaurant saas overview",
+      "rationale": "Empowering Indonesian F&B businesses with an integrated multi-tenant SaaS",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a71"
+    },
+    {
+      "id": "prd_inventory_management",
+      "label": "Inventory & Stock Tracking",
+      "community": 9,
+      "community_name": "Inventory Management",
+      "file_type": "concept",
+      "norm_label": "inventory & stock tracking",
+      "source_file": "PRD.md",
+      "source_location": "PRD.md \u00a77.8"
+    }
+  ],
+  "links": [
+    {
+      "source": "tech_laravel_backend",
+      "target": "tech_postgresql_shared_schema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_laravel_backend",
+      "target": "tech_queue_workers",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_laravel_backend",
+      "target": "tech_redis_cache_queue",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_laravel_backend",
+      "target": "tech_reverb_realtime",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_laravel_backend",
+      "target": "tech_sanctum_auth",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_nextjs_frontend",
+      "target": "tech_shadcn_tailwind_ui",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_nextjs_frontend",
+      "target": "tech_tanstack_zustand_state",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_payment_abstraction_layer",
+      "target": "tech_midtrans_gateway",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_payment_abstraction_layer",
+      "target": "tech_xendit_xenplatform",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_branch_management",
+      "target": "prd_unlimited_branches",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PRD.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_qr_table_ordering",
+      "target": "prd_kds_kitchen_display",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PRD.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_dual_payment_system",
+      "target": "tech_payment_abstraction_layer",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_implementation_phases",
+      "target": "prd_mvp_priorities",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_laravel_backend",
+      "target": "prd_multi_tenant_architecture",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_laravel_backend",
+      "target": "prd_user_roles",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_monorepo_structure",
+      "target": "tech_architecture_modular_monolith",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_nextjs_frontend",
+      "target": "prd_kds_kitchen_display",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_nextjs_frontend",
+      "target": "prd_pos_cashier",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_nextjs_frontend",
+      "target": "prd_public_website",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_nextjs_frontend",
+      "target": "prd_qr_table_ordering",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_nextjs_frontend",
+      "target": "prd_restaurant_dashboard",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_nextjs_frontend",
+      "target": "prd_super_admin_dashboard",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_postgresql_shared_schema",
+      "target": "prd_multi_tenant_architecture",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_pwa_dashboard",
+      "target": "prd_pwa_approach",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_testing_pest_vitest_playwright",
+      "target": "prd_acceptance_criteria",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_subscription_billing",
+      "target": "prd_enterprise_package",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PRD.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_subscription_billing",
+      "target": "prd_professional_package",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PRD.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_subscription_billing",
+      "target": "prd_starter_package",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PRD.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_subscription_billing",
+      "target": "prd_subscription_lifecycle",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PRD.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_docker_compose_vps",
+      "target": "tech_laravel_backend",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_docker_compose_vps",
+      "target": "tech_nextjs_frontend",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_docker_compose_vps",
+      "target": "tech_postgresql_shared_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_domain_routing",
+      "target": "prd_public_website",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_domain_routing",
+      "target": "prd_qr_table_ordering",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_domain_routing",
+      "target": "prd_restaurant_dashboard",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_monorepo_structure",
+      "target": "tech_laravel_backend",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_monorepo_structure",
+      "target": "tech_nextjs_frontend",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_nextjs_frontend",
+      "target": "tech_pwa_dashboard",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_branch_management",
+      "target": "prd_multi_tenant_architecture",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PRD.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_menu_management",
+      "target": "prd_multi_tenant_architecture",
+      "relation": "shares_data_with",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PRD.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_reverb_realtime",
+      "target": "prd_pos_cashier",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_subscription_billing",
+      "target": "tech_midtrans_gateway",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "tech_reverb_realtime",
+      "target": "prd_kds_kitchen_display",
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_menu_management",
+      "target": "tech_cloudflare_r2_storage",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    },
+    {
+      "source": "prd_qr_table_ordering",
+      "target": "tech_xendit_xenplatform",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "TECH.md",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "he_multitenancy_isolation",
+      "label": "Multi-Tenant Data Isolation Guardrail",
+      "nodes": [
+        "prd_multi_tenant_architecture",
+        "tech_postgresql_shared_schema",
+        "tech_sanctum_auth",
+        "prd_user_roles"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md"
+    },
+    {
+      "id": "he_payment_routing",
+      "label": "Dual-Track Multi-Tenant Payment Engine",
+      "nodes": [
+        "prd_dual_payment_system",
+        "tech_payment_abstraction_layer",
+        "tech_xendit_xenplatform",
+        "tech_midtrans_gateway",
+        "prd_subscription_billing"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "TECH.md"
+    },
+    {
+      "id": "he_realtime_order_lifecycle",
+      "label": "Order-to-Kitchen Realtime Flow",
+      "nodes": [
+        "prd_qr_table_ordering",
+        "prd_kds_kitchen_display",
+        "prd_pos_cashier",
+        "tech_reverb_realtime"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PRD.md"
+    }
+  ]
+}

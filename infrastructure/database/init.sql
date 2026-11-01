@@ -1,0 +1,8 @@
+-- PostgreSQL init script for Ordexa
+-- Runs once on first container start
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- Set timezone
+SET timezone = 'Asia/Jakarta';
