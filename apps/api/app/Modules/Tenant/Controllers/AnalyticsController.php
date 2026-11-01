@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Modules\Branch\Models\Branch;
 use App\Modules\Order\Models\Order;
 use App\Modules\Order\Models\OrderItem;
-use App\Modules\Subscription\Models\Package;
 use App\Modules\Subscription\Models\Subscription;
 use App\Modules\Tenant\Models\Restaurant;
 use Illuminate\Http\JsonResponse;
@@ -113,7 +112,7 @@ class AnalyticsController extends Controller
             ->latest()
             ->limit(10)
             ->get()
-            ->map(fn($resto) => [
+            ->map(fn ($resto) => [
                 'id' => $resto->id,
                 'name' => $resto->name,
                 'slug' => $resto->slug,

@@ -1203,13 +1203,13 @@
       "degree": 20
     },
     {
-      "id": "apps_api_app_modules_menu_models_menucategory_menucategory",
-      "label": "MenuCategory",
+      "id": "apps_api_app_modules_subscription_models_subscription_subscription",
+      "label": "Subscription",
       "degree": 17
     },
     {
-      "id": "apps_api_app_modules_subscription_models_subscription_subscription",
-      "label": "Subscription",
+      "id": "apps_api_app_modules_tenant_traits_belongstotenant_belongstotenant",
+      "label": "BelongsToTenant",
       "degree": 17
     }
   ],
@@ -1223,7 +1223,7 @@
       ],
       "confidence": "INFERRED",
       "relation": "references",
-      "why": "inferred connection - not explicitly stated in source; crosses file types (doc \u2194 code); connects across different repos/directories; bridges separate communities; peripheral node `Aturan Scoping Query:` unexpectedly reaches hub `BelongsToTenant`"
+      "why": "inferred connection - not explicitly stated in source; crosses file types (code ↔ doc); connects across different repos/directories; bridges separate communities; peripheral node `Aturan Scoping Query:` unexpectedly reaches hub `BelongsToTenant`"
     },
     {
       "source": "Phase 2: Authentication, Multi-Tenant & RBAC",
@@ -1234,7 +1234,7 @@
       ],
       "confidence": "INFERRED",
       "relation": "references",
-      "why": "inferred connection - not explicitly stated in source; crosses file types (doc \u2194 code); connects across different repos/directories; bridges separate communities"
+      "why": "inferred connection - not explicitly stated in source; crosses file types (code ↔ doc); connects across different repos/directories; bridges separate communities"
     },
     {
       "source": "Phase 2: Authentication, Multi-Tenant & RBAC",
@@ -1245,7 +1245,7 @@
       ],
       "confidence": "INFERRED",
       "relation": "references",
-      "why": "inferred connection - not explicitly stated in source; crosses file types (doc \u2194 code); connects across different repos/directories"
+      "why": "inferred connection - not explicitly stated in source; crosses file types (code ↔ doc); connects across different repos/directories"
     },
     {
       "source": "SaaS Subscription & Billing Engine",
@@ -1270,8 +1270,41 @@
       "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
     }
   ],
-  "tokens": {
-    "input": 0,
-    "output": 0
-  }
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `BelongsToTenant` connect `Restaurant` to `MidtransProvider`, `AGENTS.md — Ordexa Engineering & Agent Operational Playbook`, `Order`, `MenuItem`, `Table`, `TenantScope`?",
+      "why": "High betweenness centrality (0.023) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Restaurant` connect `Restaurant` to `User`, `AGENTS.md — Ordexa Engineering & Agent Operational Playbook`, `Order`, `TestCase`, `MenuItem`, `Illuminate\\Database\\Eloquent\\Relations\\BelongsTo`, `Illuminate\\Http\\Request`, `Table`, `SubscriptionController`?",
+      "why": "High betweenness centrality (0.023) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Table` connect `Table` to `Order`, `TestCase`, `Restaurant`, `Illuminate\\Support\\Str`, `Illuminate\\Database\\Eloquent\\Relations\\BelongsTo`, `OrderCreatedEvent`?",
+      "why": "High betweenness centrality (0.018) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `ApiError`, `ApiResponse`, `Branch` to the rest of the system?",
+      "why": "305 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `MidtransProvider` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08140610545790934 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `User` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.06262626262626263 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Illuminate\\Database\\Migrations\\Migration` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.07549361207897794 - nodes in this community are weakly interconnected."
+    }
+  ]
 }

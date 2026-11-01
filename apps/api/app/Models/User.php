@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Modules\Partner\Models\Partner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -34,6 +36,11 @@ class User extends Authenticatable
     public function memberships(): HasMany
     {
         return $this->hasMany(RestaurantMembership::class);
+    }
+
+    public function partner(): HasOne
+    {
+        return $this->hasOne(Partner::class);
     }
 
     public function currentMembership(): ?RestaurantMembership

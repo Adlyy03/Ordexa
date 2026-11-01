@@ -2,6 +2,7 @@
 
 namespace App\Modules\Menu\Services;
 
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -15,18 +16,18 @@ class MediaUploadService
             $extension = 'jpg';
         }
 
-        $fileName = Str::uuid() . '.' . $extension;
+        $fileName = Str::uuid().'.'.$extension;
         $fileKey = "{$folder}/{$fileName}";
 
         // If Cloudflare R2 is configured
         if (config('filesystems.disks.r2.key') && config('filesystems.disks.r2.secret')) {
-            /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
+            /** @var FilesystemAdapter $disk */
             $disk = Storage::disk('r2');
             $uploadUrl = $disk->temporaryUploadUrl(
                 $fileKey,
                 now()->addMinutes(15)
             );
-            $publicUrl = config('filesystems.disks.r2.url', '') . '/' . $fileKey;
+            $publicUrl = config('filesystems.disks.r2.url', '').'/'.$fileKey;
 
             return [
                 'mode' => 'presigned_r2',

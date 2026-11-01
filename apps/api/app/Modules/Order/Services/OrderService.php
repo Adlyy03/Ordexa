@@ -3,12 +3,12 @@
 namespace App\Modules\Order\Services;
 
 use App\Modules\Branch\Models\Branch;
-use App\Modules\Table\Models\Table;
 use App\Modules\Menu\Models\MenuItem;
 use App\Modules\Order\Events\OrderCreatedEvent;
 use App\Modules\Order\Events\OrderStatusUpdatedEvent;
 use App\Modules\Order\Models\Order;
 use App\Modules\Order\Models\OrderItem;
+use App\Modules\Table\Models\Table;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
@@ -160,7 +160,7 @@ class OrderService
         $currentStatus = $order->status;
         $allowed = self::VALID_TRANSITIONS[$currentStatus] ?? [];
 
-        if (!in_array($newStatus, $allowed, true)) {
+        if (! in_array($newStatus, $allowed, true)) {
             throw new InvalidArgumentException(
                 "Invalid state transition from '{$currentStatus}' to '{$newStatus}'"
             );
@@ -183,7 +183,7 @@ class OrderService
     public function updatePaymentStatus(Order $order, string $paymentStatus): Order
     {
         $validStatuses = ['unpaid', 'pending', 'paid', 'failed', 'expired'];
-        if (!in_array($paymentStatus, $validStatuses, true)) {
+        if (! in_array($paymentStatus, $validStatuses, true)) {
             throw new InvalidArgumentException("Invalid payment status '{$paymentStatus}'");
         }
 
@@ -199,8 +199,9 @@ class OrderService
 
     protected function generateOrderNumber(): string
     {
-        $prefix = 'ORD-' . date('Ymd');
+        $prefix = 'ORD-'.date('Ymd');
         $random = strtoupper(Str::random(4));
+
         return "{$prefix}-{$random}";
     }
 }

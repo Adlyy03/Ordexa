@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->json('operational_hours')->nullable();
             $table->enum('subscription_status', [
-                'registered', 'pending_payment', 'active', 'grace_period', 'expired', 'suspended'
+                'registered', 'pending_payment', 'active', 'grace_period', 'expired', 'suspended',
             ])->default('registered');
             $table->timestamps();
             $table->softDeletes();

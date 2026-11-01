@@ -9,6 +9,7 @@ class StoreBranchRequest extends FormRequest
     public function authorize(): bool
     {
         $membership = $this->user()?->currentMembership();
+
         return $membership && in_array($membership->role, ['owner', 'admin'], true);
     }
 

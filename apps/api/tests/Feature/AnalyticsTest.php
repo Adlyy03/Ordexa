@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Models\RestaurantMembership;
 use App\Models\User;
 use App\Modules\Branch\Models\Branch;
-use App\Modules\Menu\Models\MenuCategory;
-use App\Modules\Menu\Models\MenuItem;
 use App\Modules\Order\Models\Order;
 use App\Modules\Subscription\Models\Package;
 use App\Modules\Subscription\Models\Subscription;
@@ -27,7 +25,7 @@ class AnalyticsTest extends TestCase
         RestaurantMembership::create(['user_id' => $userA->id, 'restaurant_id' => $restoA->id, 'role' => 'owner']);
         $branchA = Branch::create(['restaurant_id' => $restoA->id, 'name' => 'Cabang A', 'slug' => 'cabang-a']);
         $tableA = Table::create(['restaurant_id' => $restoA->id, 'branch_id' => $branchA->id, 'name' => 'T1', 'qr_token' => 't1']);
-        
+
         $orderA = Order::create([
             'order_number' => 'ORD-A1',
             'restaurant_id' => $restoA->id,

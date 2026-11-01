@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
-use App\Modules\Tenant\Models\Restaurant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -115,21 +113,21 @@ class AuthTest extends TestCase
         $token = $regResponse->json('data.token');
 
         // Test Me
-        $meResponse = $this->withHeader('Authorization', 'Bearer ' . $token)
+        $meResponse = $this->withHeader('Authorization', 'Bearer '.$token)
             ->getJson('/api/auth/me');
 
         $meResponse->assertStatus(200)
             ->assertJsonPath('data.user.email', 'ahmad@restoenak.com');
 
         // Test Logout
-        $logoutResponse = $this->withHeader('Authorization', 'Bearer ' . $token)
+        $logoutResponse = $this->withHeader('Authorization', 'Bearer '.$token)
             ->postJson('/api/auth/logout');
 
         $logoutResponse->assertStatus(200)
             ->assertJson(['message' => 'Logout berhasil.']);
 
         // Verify token is revoked
-        $meAfterLogout = $this->withHeader('Authorization', 'Bearer ' . $token)
+        $meAfterLogout = $this->withHeader('Authorization', 'Bearer '.$token)
             ->getJson('/api/auth/me');
 
         $meAfterLogout->assertStatus(401);

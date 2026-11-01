@@ -28,6 +28,7 @@ class MenuItemController extends Controller
         if ($branchId = $request->input('branch_id')) {
             $items->transform(function ($item) use ($branchId) {
                 $item->branch_available = $item->isAvailableAtBranch((int) $branchId);
+
                 return $item;
             });
         }

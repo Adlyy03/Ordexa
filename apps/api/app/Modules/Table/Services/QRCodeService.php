@@ -40,6 +40,7 @@ class QRCodeService
     public function regenerate(Table $table): string
     {
         $table->update(['qr_token' => (string) Str::uuid()]);
+
         return $this->generate($table);
     }
 }

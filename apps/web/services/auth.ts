@@ -38,6 +38,7 @@ export interface RegisterPayload {
   password: string;
   password_confirmation: string;
   restaurant_name: string;
+  referral_code?: string;
 }
 
 export interface LoginPayload {

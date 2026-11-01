@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
             $table->foreignId('package_id')->constrained('packages');
             $table->enum('status', [
-                'pending_payment', 'active', 'grace_period', 'expired', 'cancelled'
+                'pending_payment', 'active', 'grace_period', 'expired', 'cancelled',
             ])->default('pending_payment');
             $table->string('billing_period')->default('monthly'); // monthly, yearly
             $table->integer('amount');

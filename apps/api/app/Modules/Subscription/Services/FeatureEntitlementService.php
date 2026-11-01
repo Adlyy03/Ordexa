@@ -51,6 +51,7 @@ class FeatureEntitlementService
             if ($subscription?->status === 'grace_period') {
                 return in_array($feature, ['qr_ordering', 'menu_management', 'order_management'], true);
             }
+
             return false;
         }
 

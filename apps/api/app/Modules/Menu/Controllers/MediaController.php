@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Modules\Menu\Services\MediaUploadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MediaController extends Controller
@@ -41,7 +40,7 @@ class MediaController extends Controller
 
         $file = $request->file('file');
         $folder = $request->input('folder', 'menu-items');
-        $fileName = Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $fileName = Str::uuid().'.'.$file->getClientOriginalExtension();
         $path = $file->storeAs($folder, $fileName, 'public');
 
         return response()->json([

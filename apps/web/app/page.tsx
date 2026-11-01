@@ -21,6 +21,9 @@ export default function HomePage() {
             <a href="#fitur" className="hover:text-zinc-900 transition-colors">Fitur</a>
             <a href="#solusi" className="hover:text-zinc-900 transition-colors">Solusi</a>
             <a href="#harga" className="hover:text-zinc-900 transition-colors">Paket Langganan</a>
+            <Link href="/partner" className="text-emerald-700 font-semibold hover:text-emerald-800 transition-colors">
+              Program Mitra
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3">

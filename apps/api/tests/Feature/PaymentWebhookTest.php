@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\Modules\Payment\Models\PaymentTransaction;
 use App\Modules\Subscription\Models\Package;
 use App\Modules\Subscription\Models\Subscription;
 use App\Modules\Tenant\Models\Restaurant;
+use Database\Seeders\PackageSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,6 +14,7 @@ class PaymentWebhookTest extends TestCase
     use RefreshDatabase;
 
     private string $token;
+
     private int $restaurantId;
 
     protected function setUp(): void
@@ -21,7 +22,7 @@ class PaymentWebhookTest extends TestCase
         parent::setUp();
 
         // Seed packages
-        $this->seed(\Database\Seeders\PackageSeeder::class);
+        $this->seed(PackageSeeder::class);
 
         $res = $this->postJson('/api/auth/register', [
             'name' => 'Owner Resto',
@@ -40,7 +41,8 @@ class PaymentWebhookTest extends TestCase
     private function asTenant(string $token)
     {
         $this->app['auth']->forgetGuards();
-        return $this->withHeader('Authorization', 'Bearer ' . $token);
+
+        return $this->withHeader('Authorization', 'Bearer '.$token);
     }
 
     public function test_xendit_webhook_requires_valid_token(): void
@@ -148,7 +150,7 @@ class PaymentWebhookTest extends TestCase
         $statusCode = '200';
         $grossAmount = '349000.00';
 
-        $validSignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
+        $validSignature = hash('sha512', $orderId.$statusCode.$grossAmount.$serverKey);
 
         // 1. Invalid signature -> 401
         $this->postJson('/api/webhooks/midtrans', [

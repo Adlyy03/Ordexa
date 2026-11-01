@@ -10,9 +10,13 @@ class TableAndPublicOrderTest extends TestCase
     use RefreshDatabase;
 
     private string $token;
+
     private int $restaurantId;
+
     private string $restaurantSlug;
+
     private int $mainBranchId;
+
     private string $mainBranchSlug;
 
     protected function setUp(): void
@@ -39,7 +43,8 @@ class TableAndPublicOrderTest extends TestCase
     private function asTenant(string $token)
     {
         $this->app['auth']->forgetGuards();
-        return $this->withHeader('Authorization', 'Bearer ' . $token);
+
+        return $this->withHeader('Authorization', 'Bearer '.$token);
     }
 
     public function test_can_create_table_with_auto_generated_qr_code(): void

@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { authService } from "@/services/auth";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { UtensilsCrossed, ArrowRight, Loader2, CheckCircle2 } from "lucide-react";
+import { UtensilsCrossed, ArrowRight, Loader2, CheckCircle2, Tag } from "lucide-react";
 
 const registerSchema = z
   .object({
@@ -20,6 +20,7 @@ const registerSchema = z
     email: z.string().email("Format email tidak valid"),
     password: z.string().min(8, "Password minimal 8 karakter"),
     password_confirmation: z.string().min(8, "Konfirmasi password minimal 8 karakter"),
+    referral_code: z.string().optional(),
   })
   .refine((data) => data.password === data.password_confirmation, {
     message: "Konfirmasi password tidak cocok",
@@ -28,17 +29,32 @@ const registerSchema = z
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
-export default function RegisterPage() {
+function RegisterFormContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
+  const [showReferralInput, setShowReferralInput] = useState(false);
+
+  const refParam = searchParams.get("ref") || "";
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      referral_code: refParam,
+    },
   });
+
+  useEffect(() => {
+    if (refParam) {
+      setValue("referral_code", refParam);
+      setShowReferralInput(true);
+    }
+  }, [refParam, setValue]);
 
   const onSubmit = async (data: RegisterForm) => {
     setLoading(true);
@@ -53,6 +69,158 @@ export default function RegisterPage() {
     }
   };
 
+  return (
+    <div className="bg-white rounded-2xl border border-zinc-200/80 shadow-sm p-8">
+      {refParam && (
+        <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 text-xs text-emerald-800">
+          <Tag className="w-4 h-4 text-emerald-600 shrink-0" />
+          <span>
+            Anda mendaftar melalui tautan mitra dengan kode:{" "}
+            <strong className="font-mono">{refParam}</strong>
+          </span>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <Label htmlFor="name">Nama Pemilik / PIC</Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Contoh: Budi Santoso"
+              disabled={loading}
+              {...register("name")}
+            />
+            {errors.name && (
+              <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="restaurant_name">Nama Restoran / Brand</Label>
+            <Input
+              id="restaurant_name"
+              type="text"
+              placeholder="Contoh: Kopi Kenangan Senopati"
+              disabled={loading}
+              {...register("restaurant_name")}
+            />
+            {errors.restaurant_name && (
+              <p className="text-xs text-red-500 mt-1">{errors.restaurant_name.message}</p>
+            )}
+          </div>
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor="email">Email Bisnis</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="budi@namarestoran.com"
+            autoComplete="email"
+            disabled={loading}
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="Min. 8 karakter"
+              autoComplete="new-password"
+              disabled={loading}
+              {...register("password")}
+            />
+            {errors.password && (
+              <p className="text-xs text-red-500 mt-1">{errors.password.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-1.5">
+            <Label htmlFor="password_confirmation">Ulangi Password</Label>
+            <Input
+              id="password_confirmation"
+              type="password"
+              placeholder="Ulangi password"
+              autoComplete="new-password"
+              disabled={loading}
+              {...register("password_confirmation")}
+            />
+            {errors.password_confirmation && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.password_confirmation.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Optional Referral Code Toggle */}
+        <div className="pt-1">
+          {!showReferralInput ? (
+            <button
+              type="button"
+              onClick={() => setShowReferralInput(true)}
+              className="text-xs text-zinc-500 hover:text-zinc-900 font-medium flex items-center gap-1"
+            >
+              <Tag className="w-3.5 h-3.5" /> Punya kode referral mitra?
+            </button>
+          ) : (
+            <div className="space-y-1.5">
+              <Label htmlFor="referral_code">Kode Referral Mitra (Opsional)</Label>
+              <Input
+                id="referral_code"
+                type="text"
+                placeholder="Contoh: BUDI1234"
+                disabled={loading || !!refParam}
+                className="font-mono uppercase text-xs"
+                {...register("referral_code")}
+              />
+            </div>
+          )}
+        </div>
+
+        <Button
+          type="submit"
+          className="w-full mt-2"
+          disabled={loading}
+        >
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Mendaftarkan Restoran...
+            </>
+          ) : (
+            <>
+              Mulai Sekarang
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </>
+          )}
+        </Button>
+      </form>
+
+      <div className="mt-6 pt-6 border-t border-zinc-100 text-center">
+        <p className="text-sm text-zinc-500">
+          Sudah memiliki akun?{" "}
+          <Link
+            href="/login"
+            className="font-medium text-zinc-900 underline underline-offset-4 hover:text-zinc-700"
+          >
+            Masuk di sini
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-zinc-50 px-4 py-12">
       <div className="w-full max-w-lg">
@@ -87,119 +255,9 @@ export default function RegisterPage() {
           </span>
         </div>
 
-        {/* Form Card */}
-        <div className="bg-white rounded-2xl border border-zinc-200/80 shadow-sm p-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="name">Nama Pemilik / PIC</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="Contoh: Budi Santoso"
-                  disabled={loading}
-                  {...register("name")}
-                />
-                {errors.name && (
-                  <p className="text-xs text-red-500 mt-1">{errors.name.message}</p>
-                )}
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="restaurant_name">Nama Restoran / Brand</Label>
-                <Input
-                  id="restaurant_name"
-                  type="text"
-                  placeholder="Contoh: Kopi Kenangan Senopati"
-                  disabled={loading}
-                  {...register("restaurant_name")}
-                />
-                {errors.restaurant_name && (
-                  <p className="text-xs text-red-500 mt-1">{errors.restaurant_name.message}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="email">Email Bisnis</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="budi@namarestoran.com"
-                autoComplete="email"
-                disabled={loading}
-                {...register("email")}
-              />
-              {errors.email && (
-                <p className="text-xs text-red-500 mt-1">{errors.email.message}</p>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Min. 8 karakter"
-                  autoComplete="new-password"
-                  disabled={loading}
-                  {...register("password")}
-                />
-                {errors.password && (
-                  <p className="text-xs text-red-500 mt-1">{errors.password.message}</p>
-                )}
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="password_confirmation">Ulangi Password</Label>
-                <Input
-                  id="password_confirmation"
-                  type="password"
-                  placeholder="Ulangi password"
-                  autoComplete="new-password"
-                  disabled={loading}
-                  {...register("password_confirmation")}
-                />
-                {errors.password_confirmation && (
-                  <p className="text-xs text-red-500 mt-1">
-                    {errors.password_confirmation.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <Button
-              type="submit"
-              className="w-full mt-2"
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Mendaftarkan Restoran...
-                </>
-              ) : (
-                <>
-                  Mulai Sekarang
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </>
-              )}
-            </Button>
-          </form>
-
-          <div className="mt-6 pt-6 border-t border-zinc-100 text-center">
-            <p className="text-sm text-zinc-500">
-              Sudah memiliki akun?{" "}
-              <Link
-                href="/login"
-                className="font-medium text-zinc-900 underline underline-offset-4 hover:text-zinc-700"
-              >
-                Masuk di sini
-              </Link>
-            </p>
-          </div>
-        </div>
+        <Suspense fallback={<div className="p-8 text-center text-zinc-500">Memuat formulir...</div>}>
+          <RegisterFormContent />
+        </Suspense>
 
         <p className="mt-8 text-center text-xs text-zinc-400">
           Dengan mendaftar, Anda menyetujui Ketentuan Layanan & Kebijakan Privasi Ordexa.

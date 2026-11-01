@@ -49,7 +49,7 @@ return new class extends Migration
         });
 
         // 4. Add restaurant_id to tables if not present
-        if (!Schema::hasColumn('tables', 'restaurant_id')) {
+        if (! Schema::hasColumn('tables', 'restaurant_id')) {
             Schema::table('tables', function (Blueprint $table) {
                 $table->foreignId('restaurant_id')->nullable()->after('id')->constrained()->cascadeOnDelete();
                 $table->index('restaurant_id');

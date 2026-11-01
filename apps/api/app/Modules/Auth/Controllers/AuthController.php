@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Modules\Auth\Requests\LoginRequest;
 use App\Modules\Auth\Requests\RegisterRequest;
+use App\Modules\Partner\Services\PartnerService;
 use App\Modules\Tenant\Models\Restaurant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -24,7 +26,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            $restaurantSlug = Str::slug($request->restaurant_name) . '-' . Str::lower(Str::random(5));
+            $restaurantSlug = Str::slug($request->restaurant_name).'-'.Str::lower(Str::random(5));
             $restaurant = Restaurant::create([
                 'name' => $request->restaurant_name,
                 'slug' => $restaurantSlug,
@@ -34,7 +36,7 @@ class AuthController extends Controller
             // Create default main branch
             $branch = $restaurant->branches()->create([
                 'name' => 'Cabang Utama',
-                'slug' => 'cabang-utama-' . Str::lower(Str::random(4)),
+                'slug' => 'cabang-utama-'.Str::lower(Str::random(4)),
                 'is_active' => true,
             ]);
 
@@ -45,6 +47,16 @@ class AuthController extends Controller
                 'branch_id' => $branch->id,
                 'is_active' => true,
             ]);
+
+            // Track referral if referral code is present
+            if ($request->filled('referral_code')) {
+                try {
+                    app(PartnerService::class)
+                        ->trackReferral($restaurant, $request->input('referral_code'), $user->id);
+                } catch (\Throwable $e) {
+                    Log::warning('Referral tracking failed during registration: '.$e->getMessage());
+                }
+            }
 
             $token = $user->createToken('auth_token')->plainTextToken;
 

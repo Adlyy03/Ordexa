@@ -50,7 +50,7 @@ class OrderCreatedEvent implements ShouldBroadcastNow
             'total_amount' => $this->order->total_amount,
             'items_count' => $this->order->items->count(),
             'created_at' => $this->order->created_at->toISOString(),
-            'items' => $this->order->items->map(fn($item) => [
+            'items' => $this->order->items->map(fn ($item) => [
                 'id' => $item->id,
                 'name' => $item->name,
                 'variant' => $item->variant,

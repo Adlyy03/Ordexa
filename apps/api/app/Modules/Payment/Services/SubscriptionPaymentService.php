@@ -2,7 +2,6 @@
 
 namespace App\Modules\Payment\Services;
 
-use App\Modules\Payment\Contracts\PaymentGatewayInterface;
 use App\Modules\Payment\DTOs\CreateInvoiceDTO;
 use App\Modules\Payment\Models\PaymentTransaction;
 use App\Modules\Payment\Providers\MidtransProvider;
@@ -21,7 +20,7 @@ class SubscriptionPaymentService
     {
         $provider = $gateway === 'midtrans' ? $this->midtransProvider : $this->xenditProvider;
 
-        $referenceId = 'SUB-' . $subscription->id . '-' . Str::upper(Str::random(6));
+        $referenceId = 'SUB-'.$subscription->id.'-'.Str::upper(Str::random(6));
         $restaurant = $subscription->restaurant;
         $package = $subscription->package;
 
@@ -29,9 +28,9 @@ class SubscriptionPaymentService
             referenceId: $referenceId,
             amount: $subscription->amount,
             description: "Langganan Ordexa Paket {$package->name} ({$subscription->billing_period}) - {$restaurant->name}",
-            payerEmail: $restaurant->email ?? 'billing@' . $restaurant->slug . '.id',
-            successRedirectUrl: url("/restaurant/settings/subscription?status=success"),
-            failureRedirectUrl: url("/restaurant/settings/subscription?status=failed"),
+            payerEmail: $restaurant->email ?? 'billing@'.$restaurant->slug.'.id',
+            successRedirectUrl: url('/restaurant/settings/subscription?status=success'),
+            failureRedirectUrl: url('/restaurant/settings/subscription?status=failed'),
             merchantAccountId: null // Subscriptions always go to platform master account (Track 1)
         );
 

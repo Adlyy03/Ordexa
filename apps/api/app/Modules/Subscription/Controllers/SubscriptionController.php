@@ -5,7 +5,6 @@ namespace App\Modules\Subscription\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Payment\Services\SubscriptionPaymentService;
 use App\Modules\Subscription\Models\Package;
-use App\Modules\Subscription\Models\Subscription;
 use App\Modules\Subscription\Services\FeatureEntitlementService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

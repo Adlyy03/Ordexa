@@ -93,6 +93,12 @@ export default function SuperAdminDashboard() {
         </div>
 
         <div className="flex items-center gap-3">
+          <Link href="/admin/partners">
+            <Button variant="outline" size="sm" className="bg-zinc-800 border-zinc-700 text-zinc-200 text-xs rounded-xl">
+              <Users className="w-3.5 h-3.5 mr-1 text-emerald-400" />
+              Kelola Program Mitra
+            </Button>
+          </Link>
           <Link href="/restaurant">
             <Button variant="outline" size="sm" className="bg-zinc-800 border-zinc-700 text-zinc-200 text-xs rounded-xl">
               Simulasi Restoran View

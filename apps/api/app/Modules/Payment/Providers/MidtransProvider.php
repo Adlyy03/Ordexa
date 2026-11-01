@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 class MidtransProvider implements PaymentGatewayInterface
 {
     private string $serverKey;
+
     private string $baseUrl;
 
     public function __construct(?string $serverKey = null)
@@ -27,14 +28,14 @@ class MidtransProvider implements PaymentGatewayInterface
     {
         if (empty($this->serverKey) || app()->runningUnitTests() || app()->environment('testing') || str_starts_with($this->serverKey, 'mock_') || $this->serverKey === 'midtrans_dev_server_key') {
             return new InvoiceResultDTO(
-                invoiceId: 'midtrans_' . $dto->referenceId,
+                invoiceId: 'midtrans_'.$dto->referenceId,
                 referenceId: $dto->referenceId,
-                paymentUrl: 'https://app.sandbox.midtrans.com/snap/v2/vtweb/' . $dto->referenceId,
+                paymentUrl: 'https://app.sandbox.midtrans.com/snap/v2/vtweb/'.$dto->referenceId,
                 status: 'pending'
             );
         }
 
-        $authHeader = 'Basic ' . base64_encode($this->serverKey . ':');
+        $authHeader = 'Basic '.base64_encode($this->serverKey.':');
 
         $response = Http::withHeaders([
             'Authorization' => $authHeader,
@@ -74,7 +75,7 @@ class MidtransProvider implements PaymentGatewayInterface
         $statusCode = $payload['status_code'] ?? '';
         $grossAmount = $payload['gross_amount'] ?? '';
 
-        $expectedSignature = hash('sha512', $orderId . $statusCode . $grossAmount . $this->serverKey);
+        $expectedSignature = hash('sha512', $orderId.$statusCode.$grossAmount.$this->serverKey);
 
         return hash_equals($expectedSignature, $signature);
     }

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Payment\Services;
 
-use App\Modules\Payment\Contracts\PaymentGatewayInterface;
+use App\Modules\Partner\Services\CommissionService;
 use App\Modules\Payment\DTOs\WebhookPayloadDTO;
 use App\Modules\Payment\Models\PaymentTransaction;
 use App\Modules\Payment\Models\PaymentWebhook;
@@ -24,10 +24,12 @@ class PaymentWebhookService
         // 1. Signature Verification
         if (! $this->xenditProvider->verifyWebhook($payload, $token)) {
             Log::warning('Xendit webhook signature verification failed.');
+
             return ['status' => 'unauthorized', 'code' => 401];
         }
 
         $dto = $this->xenditProvider->parseWebhook($payload);
+
         return $this->processParsedWebhook($dto);
     }
 
@@ -36,16 +38,18 @@ class PaymentWebhookService
         // 1. Signature Verification
         if (! $this->midtransProvider->verifyWebhook($payload, $signature)) {
             Log::warning('Midtrans webhook signature verification failed.');
+
             return ['status' => 'unauthorized', 'code' => 401];
         }
 
         $dto = $this->midtransProvider->parseWebhook($payload);
+
         return $this->processParsedWebhook($dto);
     }
 
     public function processParsedWebhook(WebhookPayloadDTO $dto): array
     {
-        $idempotencyKey = $dto->gateway . '_' . $dto->referenceId . '_' . $dto->status;
+        $idempotencyKey = $dto->gateway.'_'.$dto->referenceId.'_'.$dto->status;
 
         // 2. Idempotency Check — Prevent duplicate processing
         $existing = PaymentWebhook::where('idempotency_key', $idempotencyKey)->first();
@@ -100,6 +104,19 @@ class PaymentWebhookService
                             $subscription->restaurant()->update([
                                 'subscription_status' => 'active',
                             ]);
+
+                            // Partner Program: Calculate referral commission on subscription payment
+                            try {
+                                app(CommissionService::class)->processSubscriptionPayment($transaction);
+                            } catch (\Throwable $pe) {
+                                Log::warning('Partner commission calculation failed: '.$pe->getMessage());
+                            }
+                        } elseif ($dto->status === 'refunded') {
+                            try {
+                                app(CommissionService::class)->reverseCommission($transaction, 'Payment refunded via webhook');
+                            } catch (\Throwable $pe) {
+                                Log::warning('Partner commission reversal failed: '.$pe->getMessage());
+                            }
                         }
                     }
 

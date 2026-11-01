@@ -10,9 +10,11 @@ class TenantIsolationTest extends TestCase
     use RefreshDatabase;
 
     private string $tokenA;
+
     private int $restaurantIdA;
 
     private string $tokenB;
+
     private int $restaurantIdB;
 
     protected function setUp(): void
@@ -49,7 +51,8 @@ class TenantIsolationTest extends TestCase
     private function asTenant(string $token)
     {
         $this->app['auth']->forgetGuards();
-        return $this->withHeader('Authorization', 'Bearer ' . $token);
+
+        return $this->withHeader('Authorization', 'Bearer '.$token);
     }
 
     public function test_tenant_a_cannot_see_tenant_b_branches(): void
@@ -104,17 +107,17 @@ class TenantIsolationTest extends TestCase
 
         // Tenant A tries to GET Tenant B's branch -> Must return 404
         $this->asTenant($this->tokenA)
-            ->getJson('/api/branches/' . $branchBId)
+            ->getJson('/api/branches/'.$branchBId)
             ->assertStatus(404);
 
         // Tenant A tries to UPDATE Tenant B's branch -> Must return 404
         $this->asTenant($this->tokenA)
-            ->putJson('/api/branches/' . $branchBId, ['name' => 'Hacked Name'])
+            ->putJson('/api/branches/'.$branchBId, ['name' => 'Hacked Name'])
             ->assertStatus(404);
 
         // Tenant A tries to DELETE Tenant B's branch -> Must return 404
         $this->asTenant($this->tokenA)
-            ->deleteJson('/api/branches/' . $branchBId)
+            ->deleteJson('/api/branches/'.$branchBId)
             ->assertStatus(404);
     }
 

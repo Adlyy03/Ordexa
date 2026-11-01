@@ -1,5 +1,7 @@
 <?php
 
+use App\Modules\Order\Controllers\OrderController;
+use App\Modules\Order\Controllers\PublicOrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/health', fn () => response()->json([
@@ -13,8 +15,13 @@ Route::get('/health', fn () => response()->json([
 require __DIR__.'/../app/Modules/Auth/routes.php';
 
 // Customer Public QR Ordering (zero login)
-Route::get('/public/r/{restaurant_slug}/{branch_slug}/{table_token}', [App\Modules\Order\Controllers\PublicOrderController::class, 'getMenu']);
-Route::post('/public/r/{restaurant_slug}/{branch_slug}/{table_code}/order', [App\Modules\Order\Controllers\OrderController::class, 'storePublic']);
+Route::get('/public/r/{restaurant_slug}/{branch_slug}/{table_token}', [PublicOrderController::class, 'getMenu']);
+Route::post('/public/r/{restaurant_slug}/{branch_slug}/{table_code}/order', [OrderController::class, 'storePublic']);
+
+// Partner Program routes (public & protected)
+if (file_exists(__DIR__.'/../app/Modules/Partner/routes.php')) {
+    require __DIR__.'/../app/Modules/Partner/routes.php';
+}
 
 // Protected API routes
 Route::middleware(['auth:sanctum'])->group(function () {

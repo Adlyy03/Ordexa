@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Modules\Menu\Models\MenuCategory;
-use App\Modules\Menu\Models\MenuItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,9 +10,11 @@ class MenuTest extends TestCase
     use RefreshDatabase;
 
     private string $tokenA;
+
     private int $restaurantIdA;
 
     private string $tokenB;
+
     private int $restaurantIdB;
 
     protected function setUp(): void
@@ -49,7 +49,8 @@ class MenuTest extends TestCase
     private function asTenant(string $token)
     {
         $this->app['auth']->forgetGuards();
-        return $this->withHeader('Authorization', 'Bearer ' . $token);
+
+        return $this->withHeader('Authorization', 'Bearer '.$token);
     }
 
     public function test_can_create_menu_category_and_items(): void

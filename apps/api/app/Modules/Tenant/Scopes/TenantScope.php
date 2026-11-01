@@ -10,12 +10,12 @@ class TenantScope implements Scope
 {
     public function apply(Builder $builder, Model $model): void
     {
-        // Console / CLI commands bypass (seeders, tinker, migrations)
-        if (app()->runningInConsole() && ! app()->runningUnitTests()) {
+        $user = $this->resolveUser();
+
+        // Console / CLI commands bypass (seeders, tinker, migrations) when no user is authenticated
+        if (! $user && app()->runningInConsole()) {
             return;
         }
-
-        $user = $this->resolveUser();
 
         // Super admin bypass
         if ($user && method_exists($user, 'hasRole') && $user->hasRole('super_admin')) {
@@ -44,6 +44,7 @@ class TenantScope implements Scope
 
         if (method_exists($user, 'currentMembership')) {
             $membership = $user->currentMembership();
+
             return $membership?->restaurant_id;
         }
 

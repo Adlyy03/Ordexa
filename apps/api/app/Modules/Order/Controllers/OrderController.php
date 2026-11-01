@@ -4,20 +4,17 @@ namespace App\Modules\Order\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Branch\Models\Branch;
-use App\Modules\Table\Models\Table;
-use App\Modules\Tenant\Models\Restaurant;
 use App\Modules\Order\Models\Order;
 use App\Modules\Order\Services\OrderService;
+use App\Modules\Table\Models\Table;
+use App\Modules\Tenant\Models\Restaurant;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 
 class OrderController extends Controller
 {
-    public function __construct(protected OrderService $orderService)
-    {
-    }
+    public function __construct(protected OrderService $orderService) {}
 
     /**
      * Customer QR Ordering public checkout
@@ -25,7 +22,7 @@ class OrderController extends Controller
     public function storePublic(Request $request, string $restaurantSlug, string $branchSlug, string $tableCode): JsonResponse
     {
         $restaurant = Restaurant::where('slug', $restaurantSlug)->first();
-        if (!$restaurant) {
+        if (! $restaurant) {
             return response()->json(['message' => 'Restaurant not found'], 404);
         }
 
@@ -33,7 +30,7 @@ class OrderController extends Controller
             ->where('restaurant_id', $restaurant->id)
             ->where('slug', $branchSlug)
             ->first();
-        if (!$branch) {
+        if (! $branch) {
             return response()->json(['message' => 'Branch not found'], 404);
         }
 
@@ -41,10 +38,10 @@ class OrderController extends Controller
             ->where('branch_id', $branch->id)
             ->where(function ($q) use ($tableCode) {
                 $q->where('name', $tableCode)
-                  ->orWhere('qr_token', $tableCode);
+                    ->orWhere('qr_token', $tableCode);
             })
             ->first();
-        if (!$table) {
+        if (! $table) {
             return response()->json(['message' => 'Table not found'], 404);
         }
 
@@ -129,6 +126,7 @@ class OrderController extends Controller
 
         try {
             $updated = $this->orderService->updateStatus($order, $validated['status']);
+
             return response()->json([
                 'message' => "Status pesanan berhasil diubah menjadi {$validated['status']}",
                 'order' => $updated,

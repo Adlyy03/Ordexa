@@ -27,7 +27,7 @@ class BranchController extends Controller
         // Unlimited branches guardrail: No branch count limit!
         $branch = $restaurant->branches()->create([
             'name' => $request->name,
-            'slug' => Str::slug($request->name) . '-' . Str::lower(Str::random(4)),
+            'slug' => Str::slug($request->name).'-'.Str::lower(Str::random(4)),
             'address' => $request->address,
             'phone' => $request->phone,
             'operational_hours' => $request->operational_hours,

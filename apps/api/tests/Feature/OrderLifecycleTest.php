@@ -21,9 +21,13 @@ class OrderLifecycleTest extends TestCase
     use RefreshDatabase;
 
     protected User $owner;
+
     protected Restaurant $restaurant;
+
     protected Branch $branch;
+
     protected Table $table;
+
     protected MenuItem $menuItem;
 
     protected function setUp(): void

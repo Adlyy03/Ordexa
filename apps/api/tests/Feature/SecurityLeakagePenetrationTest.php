@@ -18,13 +18,19 @@ class SecurityLeakagePenetrationTest extends TestCase
     use RefreshDatabase;
 
     protected User $tenantUserA;
+
     protected Restaurant $tenantA;
+
     protected Branch $branchA;
 
     protected User $attackerUserB;
+
     protected Restaurant $tenantB;
+
     protected Branch $branchB;
+
     protected Order $orderB;
+
     protected MenuItem $itemB;
 
     protected function setUp(): void

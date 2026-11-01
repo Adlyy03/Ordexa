@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Log;
 class XenditProvider implements PaymentGatewayInterface
 {
     private string $apiKey;
+
     private string $baseUrl;
+
     private string $callbackToken;
 
     public function __construct(?string $apiKey = null, ?string $callbackToken = null)
@@ -25,7 +27,7 @@ class XenditProvider implements PaymentGatewayInterface
     public function createInvoice(CreateInvoiceDTO $dto): InvoiceResultDTO
     {
         $headers = [
-            'Authorization' => 'Basic ' . base64_encode($this->apiKey . ':'),
+            'Authorization' => 'Basic '.base64_encode($this->apiKey.':'),
             'Content-Type' => 'application/json',
         ];
 
@@ -37,9 +39,9 @@ class XenditProvider implements PaymentGatewayInterface
         // For automated tests or mock environments without outbound network
         if (empty($this->apiKey) || app()->runningUnitTests() || app()->environment('testing') || str_starts_with($this->apiKey, 'mock_') || $this->apiKey === 'xnd_development_secret') {
             return new InvoiceResultDTO(
-                invoiceId: 'xendit_inv_' . $dto->referenceId,
+                invoiceId: 'xendit_inv_'.$dto->referenceId,
                 referenceId: $dto->referenceId,
-                paymentUrl: 'https://checkout-staging.xendit.co/web/' . $dto->referenceId,
+                paymentUrl: 'https://checkout-staging.xendit.co/web/'.$dto->referenceId,
                 expiresAt: now()->addDay()->toIso8601String(),
                 status: 'pending'
             );
