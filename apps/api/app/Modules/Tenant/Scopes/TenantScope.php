@@ -10,6 +10,11 @@ class TenantScope implements Scope
 {
     public function apply(Builder $builder, Model $model): void
     {
+        // Console / CLI commands bypass (seeders, tinker, migrations)
+        if (app()->runningInConsole() && ! app()->runningUnitTests()) {
+            return;
+        }
+
         $user = $this->resolveUser();
 
         // Super admin bypass

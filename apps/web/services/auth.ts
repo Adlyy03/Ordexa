@@ -61,6 +61,7 @@ export const authService = {
 
     if (typeof window !== "undefined" && res.data.token) {
       localStorage.setItem("ordexa_token", res.data.token);
+      localStorage.setItem("token", res.data.token);
     }
     return res;
   },
@@ -80,6 +81,7 @@ export const authService = {
 
     if (typeof window !== "undefined" && res.data.token) {
       localStorage.setItem("ordexa_token", res.data.token);
+      localStorage.setItem("token", res.data.token);
     }
     return res;
   },
@@ -99,6 +101,7 @@ export const authService = {
     } finally {
       if (typeof window !== "undefined") {
         localStorage.removeItem("ordexa_token");
+        localStorage.removeItem("token");
       }
     }
   },
